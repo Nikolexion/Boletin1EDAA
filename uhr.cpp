@@ -22,6 +22,9 @@
 #include <stdexcept>
 #include <string>
 #include <vector>
+#include "binary.cpp"
+#include "galloping.cpp"
+#include "sequential.cpp"
 
 // Include to be tested files here
 
@@ -165,14 +168,22 @@ int main(int argc, char *argv[])
     // Begin testing
     std::cout << "\033[0;36mRunning tests...\033[0m" << std::endl << std::endl;
     executed_runs = 0;
-    
-    std::vector<int> datos = generar_vector_ordenado(1000);
+
+    int num = 10000;
+    std::vector<int> datos = generar_vector_ordenado(num);
     for (n = lower; n <= upper; n += step) {
         mean_time = 0;
         time_stdev = 0;
-
+        int idx;
         // Test configuration goes here
+        if (n == upper) {
+            idx = n - 1;
+        } else {
+            double porcentaje = static_cast<double>(n) / upper;
+            idx = static_cast<int>(porcentaje * (n - 1));
+        }
 
+        int target = datos[idx];
         // Run to compute elapsed time
         for (i = 0; i < runs; i++) {
             // Remember to change total depending on step type
@@ -180,6 +191,7 @@ int main(int argc, char *argv[])
 
             begin_time = std::chrono::high_resolution_clock::now();
             // Function to test goes here
+            binary_search(datos, target);
             end_time = std::chrono::high_resolution_clock::now();
 
             elapsed_time = end_time - begin_time;
