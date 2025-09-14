@@ -174,14 +174,8 @@ int main(int argc, char *argv[])
     for (n = lower; n <= upper; n += step) {
         mean_time = 0;
         time_stdev = 0;
-        int idx;
+        int idx = (int)std::round((num*n)/100);
         // Test configuration goes here
-        if (n == upper) {
-            idx = n - 1;
-        } else {
-            double porcentaje = static_cast<double>(n) / upper;
-            idx = static_cast<int>(porcentaje * (n - 1));
-        }
 
         int target = datos[idx];
         // Run to compute elapsed time
@@ -191,7 +185,7 @@ int main(int argc, char *argv[])
 
             begin_time = std::chrono::high_resolution_clock::now();
             // Function to test goes here
-            binary_search(datos, target);
+            galloping_search(datos, target);
             end_time = std::chrono::high_resolution_clock::now();
 
             elapsed_time = end_time - begin_time;
