@@ -169,7 +169,7 @@ int main(int argc, char *argv[])
     std::cout << "\033[0;36mRunning tests...\033[0m" << std::endl << std::endl;
     executed_runs = 0;
 
-    int num = 10000;
+    int num = 1000000;
     std::vector<int> datos = generar_vector_ordenado(num);
     for (n = lower; n <= upper; n += step) {
         mean_time = 0;
